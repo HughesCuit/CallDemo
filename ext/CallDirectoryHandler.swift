@@ -20,7 +20,7 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         }
         
         for phoneNumber in phoneNumbersToBlock {
-            context.addBlockingEntry(withNextSequentialPhoneNumber: phoneNumber)
+            context.addBlockingEntry(withNextSequentialPhoneNumber: CXCallDirectoryPhoneNumber(phoneNumber)!)
         }
         
         guard let (phoneNumbersToIdentify, phoneNumberIdentificationLabels) = retrievePhoneNumbersToIdentifyAndLabels() else {
@@ -31,7 +31,7 @@ class CallDirectoryHandler: CXCallDirectoryProvider {
         }
         
         for (phoneNumber, label) in zip(phoneNumbersToIdentify, phoneNumberIdentificationLabels) {
-            context.addIdentificationEntry(withNextSequentialPhoneNumber: phoneNumber, label: label)
+            context.addIdentificationEntry(withNextSequentialPhoneNumber: CXCallDirectoryPhoneNumber(phoneNumber)!, label: label)
         }
         
         context.completeRequest { (suc) in

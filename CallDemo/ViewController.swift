@@ -21,7 +21,9 @@ class ViewController: UIViewController {
         
     }
     @IBAction func simulateCall(_ sender: AnyObject) {
-        AppDelegate.shared.providerDelegate?.reportIncomingCall(uuid: UUID(), handle: phoneNumber.text!)
+        AppDelegate.shared.providerDelegate?.reportIncomingCall(uuid: UUID(), handle: phoneNumber.text!, hasVideo: false, completion: { (err) in
+            print(err)
+        })
     }
     @IBAction func endCall(_ sender: AnyObject) {
         AppDelegate.shared.providerDelegate?.endCall(uuids: activeCalls){ (uuid) in
@@ -35,8 +37,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.callStart(noti:)), name: "callStart" as Notification.Name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.callEnd(noti:)), name: "callEnd" as Notification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.callStart(noti:)), name: Notification.Name("callStart"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.callEnd(noti:)), name: Notification.Name("callEnd"), object: nil)
     }
 
     deinit {
